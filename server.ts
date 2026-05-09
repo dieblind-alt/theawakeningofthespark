@@ -86,8 +86,8 @@ async function startServer() {
          return res.status(500).json({ error: "Stripe configuration is missing. Add STRIPE_SECRET_KEY to your environment." });
       }
 
-      const { itemType } = req.body;
-      const domainUrl = req.headers.origin || `http://localhost:${PORT}`;
+      const itemType = req.body?.itemType || 'ebook';
+      const domainUrl = req.headers.origin || req.headers.host ? `https://${req.headers.host}` : `http://localhost:${PORT}`;
 
       // Only Ebook is supported for checkout now
       if (itemType !== 'ebook') {
