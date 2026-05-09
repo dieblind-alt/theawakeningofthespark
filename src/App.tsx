@@ -489,6 +489,7 @@ export default function App() {
       <Spotlight />
 
       {/* Admin Controls - Moved to end of body for max visibility */}
+      {showAdminUI && (
       <div 
         style={{ position: 'fixed', top: '1.5rem', right: '1.5rem', zIndex: 9999999, pointerEvents: 'auto' }} 
         className="flex flex-col items-end gap-3"
@@ -672,6 +673,7 @@ export default function App() {
           </div>
         )}
       </div>
+      )}
 
       <main className="relative z-10 max-w-4xl mx-auto px-6 py-24">
         
