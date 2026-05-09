@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "SiteAssets": {
+      "title": "Site Assets",
+      "description": "Stores the download URLs for the site's media assets.",
+      "type": "object",
+      "properties": {
+        "monadUrl": { "type": "string", "format": "uri" },
+        "coverUrl": { "type": "string", "format": "uri" },
+        "spreadUrl": { "type": "string", "format": "uri" },
+        "narrationUrl": { "type": "string", "format": "uri" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/site_config/main_assets": {
+      "schema": "SiteAssets",
+      "description": "The primary assets for the website."
+    },
+    "/site_config/book_fulfillment": {
+      "schema": "object",
+      "description": "URLs for book fulfillment printable PDFs."
+    }
+  }
+}

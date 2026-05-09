@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: site_config
+    // Document ID: main_assets
+    // Fields:
+    //   - monadUrl: string (optional, URL)
+    //   - coverUrl: string (optional, URL)
+    //   - spreadUrl: string (optional, URL)
+    //   - narrationUrl: string (optional, URL)
+    //   - updatedAt: timestamp (optional)
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner() {
+      return isAuthenticated() && 
+             request.auth.token.email.lower() == "dieblind@gmail.com" && 
+             request.auth.token.email_verified == true;
+    }
+
+    function isValidAssetUpdate() {
+      let data = request.resource.data;
+      return data.keys().hasOnly(['monadUrl', 'coverUrl', 'spreadUrl', 'narrationUrl', 'updatedAt']) &&
+             (!('monadUrl' in data) || data.monadUrl is string) &&
+             (!('coverUrl' in data) || data.coverUrl is string) &&
+             (!('spreadUrl' in data) || data.spreadUrl is string) &&
+             (!('narrationUrl' in data) || data.narrationUrl is string);
+    }
+
+    match /site_config/main_assets {
+      allow read: if true;
+      allow write: if isOwner() && isValidAssetUpdate();
+    }
+
+    match /site_config/book_fulfillment {
+      allow read, write: if isOwner();
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+
+    match /orders/{orderId} {
+      allow read, update: if isOwner();
+      allow create: if false; // Only server can create
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
