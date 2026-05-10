@@ -1022,7 +1022,7 @@ export default function App() {
       <footer className="w-full bg-black/60 border-t border-[#332b20] mt-32 py-16 relative z-30 px-4 md:px-8 text-center backdrop-blur-md">
         <div className="max-w-3xl mx-auto">
           <div className="text-xs font-mono tracking-[0.2em] text-[#a39481]/60 uppercase mb-8">
-            © 2026 Frederick Seän Beesley M.∴ M.∴ — All rights suppressed.
+            © 2026 Shadow Point Press & Frederick Seän Beesley M.∴ M.∴ — All rights suppressed.
           </div>
           <div className="border-t border-[#332b20]/50 pt-8">
             <button 
