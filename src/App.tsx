@@ -1019,26 +1019,26 @@ export default function App() {
 
       </main>
 
-      <footer className="w-full bg-black/40 border-t border-[#332b20] mt-24 py-12 relative z-10 px-4 md:px-8 text-center">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-[10px] font-mono tracking-[0.2em] text-[#a39481]/50 uppercase mb-6">
+      <footer className="w-full bg-black/60 border-t border-[#332b20] mt-32 py-16 relative z-30 px-4 md:px-8 text-center backdrop-blur-md">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-xs font-mono tracking-[0.2em] text-[#a39481]/60 uppercase mb-8">
             © 2026 Frederick Seän Beesley M.∴ M.∴ — All rights suppressed.
           </div>
-          <div className="border-t border-[#332b20]/50 pt-6">
+          <div className="border-t border-[#332b20]/50 pt-8">
             <button 
               onClick={() => {
                 const el = document.getElementById('policy-text');
                 if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
               }}
-              className="text-[9px] font-mono tracking-[0.25em] text-[#a39481]/40 uppercase hover:text-[#a39481]/70 transition-colors cursor-pointer bg-transparent border-none"
+              className="text-[13px] font-mono tracking-[0.2em] text-[#a39481]/60 uppercase hover:text-[#a39481]/90 transition-all cursor-pointer bg-transparent border-none py-2"
             >
               ▾ Purchase Terms & Refund Policy ▾
             </button>
-            <div id="policy-text" style={{ display: 'none' }} className="mt-4 text-left space-y-3 text-[10px] font-mono text-[#a39481]/50 leading-relaxed max-w-xl mx-auto">
-              <p><span className="text-[#a39481]/70 uppercase tracking-wider">Digital Content:</span> All sales of eBooks and digital downloads are final. Once a download link is issued, we cannot offer refunds except in cases of accidental duplicate purchases or verified technical access issues.</p>
-              <p><span className="text-[#a39481]/70 uppercase tracking-wider">Physical Books:</span> Orders for physical copies are fulfilled via third-party partners (Lulu/KDP). For issues regarding shipping damage, printing defects, or delivery tracking, please contact the specific distributor's support team.</p>
-              <p><span className="text-[#a39481]/70 uppercase tracking-wider">General:</span> By purchasing from Shadow Point Press / Frederick Sean Beesley, you agree that this intellectual property is for personal use only. All content is the property of the author.</p>
-              <p className="pt-2 border-t border-[#332b20]/30"><span className="text-[#a39481]/70 uppercase tracking-wider">Contact:</span> <a href="mailto:contact@theawakeningofthespark.com" className="text-[#FFBF00]/40 hover:text-[#FFBF00]/70 transition-colors">contact@theawakeningofthespark.com</a></p>
+            <div id="policy-text" style={{ display: 'none' }} className="mt-8 text-left space-y-6 text-sm font-mono text-[#a39481]/70 leading-relaxed max-w-2xl mx-auto bg-black/20 p-6 border border-[#332b20]/20">
+              <p><span className="text-[#a39481] uppercase tracking-wider font-bold">Digital Content:</span> All sales of eBooks and digital downloads are final. Once a download link is issued, we cannot offer refunds except in cases of accidental duplicate purchases or verified technical access issues.</p>
+              <p><span className="text-[#a39481] uppercase tracking-wider font-bold">Physical Books:</span> Orders for physical copies are fulfilled via third-party partners (Lulu/KDP). For issues regarding shipping damage, printing defects, or delivery tracking, please contact the specific distributor's support team.</p>
+              <p><span className="text-[#a39481] uppercase tracking-wider font-bold">General:</span> By purchasing from Shadow Point Press / Frederick Sean Beesley, you agree that this intellectual property is for personal use only. All content is the property of the author.</p>
+              <p className="pt-4 border-t border-[#332b20]/30"><span className="text-[#a39481] uppercase tracking-wider font-bold">Contact:</span> <a href="mailto:contact@theawakeningofthespark.com" className="text-[#FFBF00]/60 hover:text-[#FFBF00] transition-colors border-b border-[#FFBF00]/20">contact@theawakeningofthespark.com</a></p>
             </div>
           </div>
         </div>
