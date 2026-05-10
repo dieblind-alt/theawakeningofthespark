@@ -135,6 +135,47 @@ async function startServer() {
     }
   });
 
+  // Sends a download link email to the customer via Resend
+  async function sendDownloadEmail(customerEmail: string, sessionId: string, domainUrl: string) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) return;
+
+    const downloadUrl = `${domainUrl}/api/stream-ebook?session_id=${sessionId}`;
+    const body = JSON.stringify({
+      from: 'orders@theawakeningofthespark.com',
+      to: customerEmail,
+      subject: 'Your copy of The Awakening of the Spark',
+      html: `<div style="background:#0a0a0a;color:#d4c5b0;font-family:Georgia,serif;padding:40px;max-width:560px;margin:0 auto;">
+        <h1 style="color:#FFBF00;letter-spacing:0.2em;text-transform:uppercase;font-size:1.2rem;margin-bottom:1.5rem;">Thank You</h1>
+        <p style="line-height:1.8;margin-bottom:1rem;">Your purchase of <em>The Awakening of the Spark</em> is confirmed.</p>
+        <p style="line-height:1.8;margin-bottom:1.5rem;">Use the button below to download your copy at any time:</p>
+        <a href="${downloadUrl}" style="display:inline-block;border:1px solid #FFBF00;color:#FFBF00;padding:0.8rem 2rem;text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;font-size:0.8rem;font-family:monospace;">Download Your Ebook</a>
+        <p style="color:#6b5f52;font-size:0.8rem;font-family:monospace;border-top:1px solid #1f1a14;padding-top:1.5rem;margin-top:2rem;line-height:1.8;">
+          If you have any issues, email <a href="mailto:contact@theawakeningofthespark.com" style="color:#FFBF00;opacity:0.6;">contact@theawakeningofthespark.com</a>
+        </p>
+      </div>`
+    });
+
+    return new Promise<void>((resolve) => {
+      const req = https.request({
+        hostname: 'api.resend.com',
+        path: '/emails',
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(body)
+        }
+      }, (r) => {
+        r.on('data', () => {});
+        r.on('end', () => resolve());
+      });
+      req.on('error', (e) => { console.error('Email send failed:', e.message); resolve(); });
+      req.write(body);
+      req.end();
+    });
+  }
+
   // === SECURE EBOOK DELIVERY ENDPOINT ===
   // Verifies payment then serves a confirmation page that auto-triggers the download
   app.get("/api/download-ebook", async (req, res) => {
@@ -148,7 +189,14 @@ async function startServer() {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
 
       if (session.payment_status === "paid") {
+        const domainUrl = `https://${req.headers.host}`;
         const downloadUrl = `/api/stream-ebook?session_id=${sessionId}`;
+
+        // Send email in background — if it fails the download page still works
+        const customerEmail = session.customer_details?.email;
+        if (customerEmail) {
+          sendDownloadEmail(customerEmail, sessionId, domainUrl).catch(console.error);
+        }
         res.send(`<!DOCTYPE html>
 <html lang="en">
 <head>
