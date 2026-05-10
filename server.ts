@@ -11,8 +11,10 @@ dotenv.config();
 
 // Lazy initialize Stripe to prevent module load errors and catch updated env vars
 function getStripe(): Stripe | null {
-  if (process.env.STRIPE_SECRET_KEY) {
-    return new Stripe(process.env.STRIPE_SECRET_KEY);
+  // Use the Live key if it exists, otherwise fallback to the generic secret key
+  const key = process.env.STRIPE_LIVE_SECRET_KEY || process.env.STRIPE_SECRET_KEY;
+  if (key) {
+    return new Stripe(key);
   }
   return null;
 }
