@@ -492,8 +492,7 @@ export default function App() {
       {/* Admin Controls - Moved to end of body for max visibility */}
       {showAdminUI && (
       <div 
-        style={{ position: 'fixed', top: '1.5rem', right: '1.5rem', zIndex: 9999999, pointerEvents: 'auto' }} 
-        className="flex flex-col items-end gap-3"
+        className="fixed top-6 right-6 z-[9999999] pointer-events-auto flex flex-col items-end gap-3"
       >
         {!isAuthReady ? (
           <div className="bg-black/95 border-2 border-[#FFBF00]/30 p-3 shadow-2xl backdrop-blur-xl">
@@ -577,6 +576,7 @@ export default function App() {
                       <>
                         <input 
                           type="file" 
+                          title={`Upload ${f.label}`}
                           accept={f.id.toLowerCase().includes('cover') ? ".jpg,.jpeg,.png,.pdf" : ".pdf"}
                           onChange={(e) => {
                             const file = e.target.files?.[0];
@@ -1098,13 +1098,13 @@ export default function App() {
             <button 
               onClick={() => {
                 const el = document.getElementById('policy-text');
-                if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+                if (el) el.classList.toggle('hidden');
               }}
               className="text-[13px] font-mono tracking-[0.2em] text-[#a39481]/60 uppercase hover:text-[#a39481]/90 transition-all cursor-pointer bg-transparent border-none py-2"
             >
               ▾ Purchase Terms & Refund Policy ▾
             </button>
-            <div id="policy-text" style={{ display: 'none' }} className="mt-8 text-left space-y-6 text-sm font-mono text-[#a39481]/70 leading-relaxed max-w-2xl mx-auto bg-black/20 p-6 border border-[#332b20]/20">
+            <div id="policy-text" className="hidden mt-8 text-left space-y-6 text-sm font-mono text-[#a39481]/70 leading-relaxed max-w-2xl mx-auto bg-black/20 p-6 border border-[#332b20]/20">
               <p><span className="text-[#a39481] uppercase tracking-wider font-bold">Digital Content:</span> All sales of eBooks and digital downloads are final. Once a download link is issued, we cannot offer refunds except in cases of accidental duplicate purchases or verified technical access issues.</p>
               <p><span className="text-[#a39481] uppercase tracking-wider font-bold">Physical Books:</span> Orders for physical copies are fulfilled via third-party partners (Lulu/KDP). For issues regarding shipping damage, printing defects, or delivery tracking, please contact the specific distributor's support team.</p>
               <p><span className="text-[#a39481] uppercase tracking-wider font-bold">General:</span> By purchasing from Shadow Point Press / Frederick Sean Beesley, you agree that this intellectual property is for personal use only. All content is the property of the author.</p>
