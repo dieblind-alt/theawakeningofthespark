@@ -1026,7 +1026,7 @@ export default function App() {
               <div className="w-full md:w-1/3 shrink-0 mx-auto md:mx-0 max-w-xs md:max-w-none">
                 <div className="aspect-[3/4] relative border border-[#FFBF00]/20 p-2 bg-black/40 shadow-2xl overflow-hidden group">
                   <img 
-                    src="/author.jpg" 
+                    src="/author_final.jpg" 
                     alt="Frederick Seän Beesley" 
                     className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1500ms] ease-out scale-105 group-hover:scale-100"
                   />
