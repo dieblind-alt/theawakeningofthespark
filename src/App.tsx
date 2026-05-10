@@ -454,7 +454,7 @@ export default function App() {
       }
       if (params.get('success') === 'true') {
         const item = params.get('item');
-        setTimeout(() => alert(`Order successful for ${item}! (Test Mode)`), 500);
+        setTimeout(() => alert(`Order successful for ${item}! Your download will begin shortly.`), 500);
         // Clean up URL
         window.history.replaceState({}, '', window.location.pathname);
       }

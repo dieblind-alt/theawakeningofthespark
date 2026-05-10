@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
+import https from "https";
 import Stripe from "stripe";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -135,6 +136,7 @@ async function startServer() {
   });
 
   // === SECURE EBOOK DELIVERY ENDPOINT ===
+  // Verifies payment then serves a confirmation page that auto-triggers the download
   app.get("/api/download-ebook", async (req, res) => {
     try {
       const stripe = getStripe();
@@ -144,30 +146,91 @@ async function startServer() {
       if (!sessionId) return res.status(400).send("Missing session_id");
 
       const session = await stripe.checkout.sessions.retrieve(sessionId);
-      
+
+      if (session.payment_status === "paid") {
+        const downloadUrl = `/api/stream-ebook?session_id=${sessionId}`;
+        res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Awakening of the Spark — Download</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a0a; color: #d4c5b0; font-family: Georgia, serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+    .container { max-width: 560px; }
+    h1 { font-size: 1.4rem; letter-spacing: 0.2em; text-transform: uppercase; color: #FFBF00; margin-bottom: 1.5rem; }
+    p { line-height: 1.8; margin-bottom: 1rem; color: #a39481; font-size: 1rem; }
+    em { color: #d4c5b0; font-style: italic; }
+    .btn { display: inline-block; margin-top: 1.5rem; border: 1px solid #FFBF00; color: #FFBF00; padding: 0.8rem 2rem; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.8rem; font-family: monospace; }
+    .btn:hover { background: rgba(255,191,0,0.1); }
+    .support { margin-top: 2.5rem; font-size: 0.78rem; font-family: monospace; color: #6b5f52; border-top: 1px solid #1f1a14; padding-top: 1.5rem; line-height: 1.8; }
+    .support a { color: #FFBF00; opacity: 0.6; text-decoration: none; }
+  </style>
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() { window.location.href = '${downloadUrl}'; }, 1500);
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Thank You</h1>
+    <p>Your purchase is confirmed.<br><em>The Awakening of the Spark</em> is downloading to your device now.</p>
+    <p>If your download does not begin automatically:</p>
+    <a class="btn" href="${downloadUrl}">Download Now</a>
+    <div class="support">
+      If you ever lose your copy, email<br>
+      <a href="mailto:contact@theawakeningofthespark.com">contact@theawakeningofthespark.com</a><br>
+      with your Stripe receipt and we will send you a new link.
+    </div>
+  </div>
+</body>
+</html>`);
+      } else {
+        res.status(403).send("Payment not completed.");
+      }
+    } catch (e: any) {
+      res.status(500).send(`Error verifying session: ${e.message}`);
+    }
+  });
+
+  // === SECURE EBOOK STREAM ENDPOINT ===
+  // Streams the PDF directly to the browser with Content-Disposition: attachment
+  // so it saves to the customer's Downloads folder instead of opening in the browser
+  app.get("/api/stream-ebook", async (req, res) => {
+    try {
+      const stripe = getStripe();
+      if (!stripe) return res.status(500).send("Stripe not configured.");
+
+      const sessionId = req.query.session_id as string;
+      if (!sessionId) return res.status(400).send("Missing session_id");
+
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+
       if (session.payment_status === "paid") {
         let ebookUrl = process.env.LULU_EBOOK_URL || "https://firebasestorage.googleapis.com/v0/b/gen-lang-client-0361710872.firebasestorage.app/o/Awakening%20Master%20%20Working%20Project%20With%20TOC%20%26%20ISBN%20WITH%20COVER.pdf?alt=media&token=7207f6c6-86dd-4e51-a9ee-4fea64d8bfc6";
-        
-        // Try to get dynamic URL from Firestore if Admin updated it
+
         if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
           if (getApps().length === 0) {
-             try {
-               const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-               initializeApp({ credential: cert(serviceAccount) });
-             } catch (e) {}
+            try {
+              const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+              initializeApp({ credential: cert(serviceAccount) });
+            } catch (e) {}
           }
           try {
             const dbId = process.env.FIREBASE_DATABASE_ID || "ai-studio-e7bdba52-2ec3-4633-bb68-0a9d3ef94f20";
             const db = getFirestore(dbId);
             const doc = await db.collection("site_config").doc("book_fulfillment").get();
             if (doc.exists && doc.data()?.ebook) {
-               ebookUrl = doc.data()?.ebook;
+              ebookUrl = doc.data()?.ebook;
             }
-          } catch(e) {}
+          } catch (e) {}
         }
-        
-        // Redirect directly to the PDF/Dropbox link
-        res.redirect(302, ebookUrl);
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="The-Awakening-of-the-Spark.pdf"');
+        https.get(ebookUrl, (fileStream) => fileStream.pipe(res));
       } else {
         res.status(403).send("Payment not completed.");
       }
