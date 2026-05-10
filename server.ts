@@ -94,7 +94,7 @@ async function startServer() {
          return res.status(400).json({ error: "Only digital ebook checkouts are supported via this API." });
       }
 
-      const product = { name: 'The Awakening of the Spark (Digital Ebook)', price: 1500 };
+      const product = { name: 'The Awakening of the Spark (Digital Ebook)', price: 999 };
 
       const sessionParams: Stripe.Checkout.SessionCreateParams = {
         payment_method_types: ['card'],
@@ -102,7 +102,7 @@ async function startServer() {
         line_items: [
           {
             price_data: {
-              currency: 'usd',
+              currency: 'cad',
               product_data: { name: product.name },
               unit_amount: product.price,
             },
