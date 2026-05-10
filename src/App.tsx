@@ -444,6 +444,7 @@ export default function App() {
   };
 
   const [showAdminUI, setShowAdminUI] = useState(false);
+  const [isBioExpanded, setIsBioExpanded] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -1011,6 +1012,75 @@ export default function App() {
                       Acquire Digital
                     </button>
                   </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* About the Author Section */}
+        <section className="w-full py-32 relative z-10 px-4 md:px-8 bg-black/30 border-y border-[#332b20]/30">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-16 items-start">
+              {/* Author Photo */}
+              <div className="w-full md:w-1/3 shrink-0 mx-auto md:mx-0 max-w-xs md:max-w-none">
+                <div className="aspect-[3/4] relative border border-[#FFBF00]/20 p-2 bg-black/40 shadow-2xl overflow-hidden group">
+                  <img 
+                    src="/author.jpg" 
+                    alt="Frederick Seän Beesley" 
+                    className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1500ms] ease-out scale-105 group-hover:scale-100"
+                  />
+                  <div className="absolute inset-0 pointer-events-none border border-[#FFBF00]/10 m-4 transition-all duration-700 group-hover:m-2"></div>
+                </div>
+              </div>
+
+              {/* Author Bio */}
+              <div className="flex-1">
+                <h2 className="font-serif text-3xl mb-10 tracking-[0.2em] text-[#FFBF00] uppercase text-center md:text-left underline decoration-[#FFBF00]/20 underline-offset-8">About the Author</h2>
+                
+                <div className="font-serif text-[#a39481]/90 leading-relaxed space-y-8">
+                  <p className="text-xl italic tracking-wide text-[#d4c5b0] leading-relaxed">
+                    Frederick Seän Beesley is a Canadian author, musician, and lifelong researcher of ancient history and esoteric traditions.
+                  </p>
+
+                  {isBioExpanded ? (
+                    <div className="animate-in fade-in duration-1000 space-y-8 text-base">
+                      <p>
+                        Born into the epicenter of the Pentecostal "Latter Rain" movement, Frederick is the grandson of two founding fathers of the modern Pentecostal Church. Raised amidst revivalism and prophecy, he was expected to inherit the pulpit. Instead, he stepped back. Even as a child, he possessed a quiet, observant nature that noticed the divide between the spiritual truths being preached and the mechanisms of control being practiced.
+                      </p>
+                      <p>
+                        Refusing the family calling, he left the church at eighteen and found his first sanctuary in the underground music scene of Toronto. Throughout the late eighties and nineties, he worked as a producer and musician, living in the trenches of frequency and sound. Yet, the drive to understand the "architecture of belief" never left him. Over the next few decades, his path became a relentless pursuit of the suppressed histories that institutions had spent 2,000 years trying to bury. He studied mystic alchemy, explored the geometry of the Lodge as a Master Freemason, and grounded his research through Yale’s Open Source Ancient History curriculum.
+                      </p>
+                      <p>
+                        Like many, Frederick eventually traded his creative life for the corporate world, spending nearly two decades as a national manager. This experience provided a stark realization: the modern corporate machine and the rigid religious institutions of his youth utilized the exact same systems to harvest human time, energy, and creativity.
+                      </p>
+                      <p>
+                        In 2020, a severe illness forced a sudden medical retirement, stripping away the illusion of corporate security. In that profound stillness, a lifetime of observation and esoteric research finally synthesized. Frederick recognized that the ideas historically labeled as "heresy" or "poison" by those in power were often just the bitter medicine required for individual freedom.
+                      </p>
+                      <p>
+                        Today, operating Shadow Point Press, Frederick’s goal is to share that medicine. His work explores the intersection of Gnosticism, psychology, and personal sovereignty.
+                      </p>
+                      <div className="pt-8 border-t border-[#332b20]/50">
+                        <p className="font-bold text-[#FFBF00]/80 italic">
+                          His debut book, The Awakening of the Spark, isn't just a memoir or a historical text; it is a disruptive framework. It is written specifically for the relentless seekers, the quiet observers, and anyone who feels a deep, intuitive dissonance with the modern world and is finally looking for the map out.
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="animate-in fade-in duration-700">
+                      <p className="text-base opacity-70 leading-relaxed">
+                        Operating Shadow Point Press, Frederick's work explores the intersection of Gnosticism, psychology, and personal sovereignty...
+                      </p>
+                    </div>
+                  )}
+                  
+                  <button 
+                    onClick={() => setIsBioExpanded(!isBioExpanded)}
+                    className="mt-4 text-xs font-mono tracking-[0.3em] text-[#FFBF00]/60 uppercase hover:text-[#FFBF00] transition-all flex items-center gap-3 group bg-transparent border-none cursor-pointer p-0"
+                  >
+                    <span className="group-hover:translate-x-1 transition-transform">{isBioExpanded ? '▾' : '▿'}</span>
+                    {isBioExpanded ? 'Read Less' : 'Read Full Bio'}
+                  </button>
                 </div>
               </div>
             </div>
