@@ -748,7 +748,7 @@ export default function App() {
           <h1 className="font-serif text-5xl md:text-7xl mb-12 tracking-wider glow-text uppercase">
             The Awakening<br/>of the Spark
           </h1>
-          <p className="text-xl md:text-2xl leading-relaxed max-w-2xl text-[#b5a691] italic">
+          <p className="text-xl md:text-2xl leading-relaxed max-w-2xl text-[#cbb99e] italic">
             "The truth you've been looking for is hidden inside the parts of yourself you were taught to ignore. The walls of the prison are made of paper."
           </p>
         </section>
@@ -842,7 +842,7 @@ export default function App() {
             ].map((echo, idx) => (
               <div key={idx} className="flex flex-col items-center text-center max-w-2xl mx-auto section-transition py-12 px-6">
                 <h3 className="font-serif text-2xl mb-8 tracking-wider text-[#d4c5b0]">{echo.title}</h3>
-                <p className="text-lg leading-loose text-[#a39481]">{echo.content}</p>
+                <p className="text-lg leading-loose text-[#c0aa90]">{echo.content}</p>
                 {idx < 4 && <div className="mt-24 text-[#FFBF00]/30">☩</div>}
               </div>
             ))}
@@ -929,7 +929,7 @@ export default function App() {
               <p className="italic">
                 The system isn't broken; it is functioning exactly as designed.
               </p>
-              <p className="text-lg md:text-xl text-[#b5a691]">
+              <p className="text-lg md:text-xl text-[#cbb99e]">
                 The Awakening of the Spark is the excavation. Across 63 chapters, Frederick Seän Beesley M.∴ M.∴ synthesizes suppressed Gnostic history and esoteric geometry to provide the blueprint to reclaim your stolen fire.
               </p>
             </div>
@@ -951,7 +951,7 @@ export default function App() {
                   <Book className="w-8 h-8 opacity-80" />
                 </div>
                 <h3 className="font-serif text-xl mb-4 tracking-widest text-[#FFBF00]/80 uppercase">Hardcover</h3>
-                <p className="text-sm text-[#a39481] mb-8 font-serif italic text-center">Premium print edition</p>
+                <p className="text-sm text-[#c0aa90] mb-8 font-serif italic text-center">Premium print edition</p>
                 <div className="flex flex-col gap-4 w-full mt-auto">
                   {bookLinks.hardcoverLuluUrl ? (
                     <a 
@@ -976,7 +976,7 @@ export default function App() {
                   <Book className="w-8 h-8 opacity-50" />
                 </div>
                 <h3 className="font-serif text-xl mb-4 tracking-widest text-[#FFBF00]/80 uppercase">Softcover</h3>
-                <p className="text-sm text-[#a39481] mb-8 font-serif italic text-center">Standard print edition</p>
+                <p className="text-sm text-[#c0aa90] mb-8 font-serif italic text-center">Standard print edition</p>
                 <div className="flex flex-col gap-4 w-full h-full justify-between mt-auto">
                   {bookLinks.softcoverLuluUrl ? (
                     <a 
@@ -1038,7 +1038,7 @@ export default function App() {
               <div className="flex-1">
                 <h2 className="font-serif text-3xl mb-10 tracking-[0.2em] text-[#FFBF00] uppercase text-center md:text-left underline decoration-[#FFBF00]/20 underline-offset-8">About the Author</h2>
                 
-                <div className="font-serif text-[#a39481]/90 leading-relaxed space-y-8">
+                <div className="font-serif text-[#c0aa90]/90 leading-relaxed space-y-8">
                   <p className="text-xl italic tracking-wide text-[#d4c5b0] leading-relaxed">
                     Frederick Seän Beesley is a Canadian author, musician, and lifelong researcher of ancient history and esoteric traditions.
                   </p>
@@ -1091,7 +1091,7 @@ export default function App() {
 
       <footer className="w-full bg-black/60 border-t border-[#332b20] mt-32 py-16 relative z-30 px-4 md:px-8 text-center backdrop-blur-md">
         <div className="max-w-3xl mx-auto">
-          <div className="text-xs font-mono tracking-[0.2em] text-[#a39481]/60 uppercase mb-8">
+          <div className="text-xs font-mono tracking-[0.2em] text-[#c0aa90]/60 uppercase mb-8">
             © 2026 Shadow Point Press & Frederick Seän Beesley M.∴ M.∴ — All rights suppressed.
           </div>
           <div className="border-t border-[#332b20]/50 pt-8">
@@ -1100,15 +1100,15 @@ export default function App() {
                 const el = document.getElementById('policy-text');
                 if (el) el.classList.toggle('hidden');
               }}
-              className="text-[13px] font-mono tracking-[0.2em] text-[#a39481]/60 uppercase hover:text-[#a39481]/90 transition-all cursor-pointer bg-transparent border-none py-2"
+              className="text-[13px] font-mono tracking-[0.2em] text-[#c0aa90]/60 uppercase hover:text-[#c0aa90]/90 transition-all cursor-pointer bg-transparent border-none py-2"
             >
               ▾ Purchase Terms & Refund Policy ▾
             </button>
-            <div id="policy-text" className="hidden mt-8 text-left space-y-6 text-sm font-mono text-[#a39481]/70 leading-relaxed max-w-2xl mx-auto bg-black/20 p-6 border border-[#332b20]/20">
-              <p><span className="text-[#a39481] uppercase tracking-wider font-bold">Digital Content:</span> All sales of eBooks and digital downloads are final. Once a download link is issued, we cannot offer refunds except in cases of accidental duplicate purchases or verified technical access issues.</p>
-              <p><span className="text-[#a39481] uppercase tracking-wider font-bold">Physical Books:</span> Orders for physical copies are fulfilled via third-party partners (Lulu/KDP). For issues regarding shipping damage, printing defects, or delivery tracking, please contact the specific distributor's support team.</p>
-              <p><span className="text-[#a39481] uppercase tracking-wider font-bold">General:</span> By purchasing from Shadow Point Press / Frederick Sean Beesley, you agree that this intellectual property is for personal use only. All content is the property of the author.</p>
-              <p className="pt-4 border-t border-[#332b20]/30"><span className="text-[#a39481] uppercase tracking-wider font-bold">Contact:</span> <a href="mailto:contact@theawakeningofthespark.com" className="text-[#FFBF00]/60 hover:text-[#FFBF00] transition-colors border-b border-[#FFBF00]/20">contact@theawakeningofthespark.com</a></p>
+            <div id="policy-text" className="hidden mt-8 text-left space-y-6 text-sm font-mono text-[#c0aa90]/70 leading-relaxed max-w-2xl mx-auto bg-black/20 p-6 border border-[#332b20]/20">
+              <p><span className="text-[#c0aa90] uppercase tracking-wider font-bold">Digital Content:</span> All sales of eBooks and digital downloads are final. Once a download link is issued, we cannot offer refunds except in cases of accidental duplicate purchases or verified technical access issues.</p>
+              <p><span className="text-[#c0aa90] uppercase tracking-wider font-bold">Physical Books:</span> Orders for physical copies are fulfilled via third-party partners (Lulu/KDP). For issues regarding shipping damage, printing defects, or delivery tracking, please contact the specific distributor's support team.</p>
+              <p><span className="text-[#c0aa90] uppercase tracking-wider font-bold">General:</span> By purchasing from Shadow Point Press / Frederick Sean Beesley, you agree that this intellectual property is for personal use only. All content is the property of the author.</p>
+              <p className="pt-4 border-t border-[#332b20]/30"><span className="text-[#c0aa90] uppercase tracking-wider font-bold">Contact:</span> <a href="mailto:contact@theawakeningofthespark.com" className="text-[#FFBF00]/60 hover:text-[#FFBF00] transition-colors border-b border-[#FFBF00]/20">contact@theawakeningofthespark.com</a></p>
             </div>
           </div>
         </div>
