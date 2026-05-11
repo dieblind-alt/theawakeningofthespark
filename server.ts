@@ -82,12 +82,6 @@ async function startServer() {
     res.json({ status: "ok", message: "Server is running." });
   });
 
-  // === TEMPORARY TEST ENDPOINT — REMOVE AFTER CONFIRMING EMAIL WORKS ===
-  app.get("/api/test-email", async (req, res) => {
-    const domainUrl = `https://${req.headers.host}`;
-    await sendDownloadEmail("dieblind@gmail.com", "test_session_123", domainUrl).catch(console.error);
-    res.send("Test email sent to dieblind@gmail.com — check your inbox.");
-  });
 
   app.post("/api/checkout", async (req, res) => {
     try {
